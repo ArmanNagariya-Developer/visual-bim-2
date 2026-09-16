@@ -1,0 +1,342 @@
+/* ============================================================
+   VISUAL BIM — Design System
+   Premium Architectural · Blueprint · Gold on Black
+   ============================================================
+   Palette:
+     black-950 #050505 · black-900 #0B0B0A (primary bg)
+     blueprint #111820      (technical areas)
+     gold #C9A227 · gold-light #E3C15A
+     warm #F3F1E8 · concrete-light #B8B5AA · concrete #77756D
+     earth #6B5138 · sand #A68A62
+   60% black · 20% blueprint/concrete · 10% warm white · 7% gold · 3% earth
+   ============================================================ */
+@import 'tailwindcss';
+
+@theme {
+  /* Core surfaces */
+  --color-black-950: #050505;
+  --color-black-900: #0b0b0a;
+  --color-black-850: #101010;
+  --color-black-800: #141413;
+  --color-blueprint-900: #111820;
+  --color-blueprint-800: #161f2a;
+  --color-blueprint-700: #1c2733;
+
+  /* Accents */
+  --color-gold: #c9a227;
+  --color-gold-light: #e3c15a;
+  --color-gold-dim: #8a701c;
+
+  /* Text */
+  --color-warm: #f3f1e8;
+  --color-concrete-light: #b8b5aa;
+  --color-concrete: #77756d;
+
+  /* Earth / site tones */
+  --color-earth: #6b5138;
+  --color-earth-light: #8a6c4a;
+  --color-sand: #a68a62;
+
+  /* Line tone for blueprint linework */
+  --color-line: #e8e4d8;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+
+  /* Motion */
+  --ease-precise: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-tech: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ============ Base (resets & element defaults) ============ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--color-black-900);
+    color: var(--color-warm);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis-weight: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  ::selection {
+    background: rgba(201, 162, 39, 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  /* Custom scrollbar — drafting-desk dark with gold thumb */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-black-950);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3a3323, #23201a);
+    border: 1px solid rgba(201, 162, 39, 0.25);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b5a1e;
+  }
+  html {
+    scrollbar-color: #3a3323 var(--color-black-950);
+  }
+}
+
+/* ============ Components (design-system classes) ============ */
+@layer components {
+
+  /* Blueprint grid — signature background (warm drafting lines) */
+  .blueprint {
+    background-image:
+      linear-gradient(rgba(232, 228, 216, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 228, 216, 0.05) 1px, transparent 1px),
+      linear-gradient(rgba(232, 228, 216, 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 228, 216, 0.09) 1px, transparent 1px);
+    background-size: 28px 28px, 28px 28px, 140px 140px, 140px 140px;
+    background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+  }
+
+  .blueprint-fine {
+    background-image:
+      linear-gradient(rgba(232, 228, 216, 0.038) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 228, 216, 0.038) 1px, transparent 1px);
+    background-size: 18px 18px, 18px 18px;
+  }
+
+  /* Panel on pure black */
+  .panel {
+    position: relative;
+    background:
+      linear-gradient(180deg, rgba(20, 20, 19, 0.9), rgba(5, 5, 5, 0.94));
+    border: 1px solid rgba(232, 228, 216, 0.1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  }
+
+  .panel-hover {
+    transition: border-color 0.45s var(--ease-precise),
+      box-shadow 0.45s var(--ease-precise), transform 0.45s var(--ease-precise),
+      background 0.45s var(--ease-precise);
+  }
+  .panel-hover:hover {
+    border-color: rgba(201, 162, 39, 0.45);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 0 0 1px rgba(201, 162, 39, 0.12),
+      0 28px 60px -28px rgba(0, 0, 0, 0.95);
+  }
+
+  /* Glass panel (used sparingly on media overlays) */
+  .glass {
+    background: rgba(5, 5, 5, 0.66);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    border: 1px solid rgba(201, 162, 39, 0.22);
+  }
+
+  /* Technical mono label */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Hairline divider */
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent);
+  }
+
+  /* Glow helpers (subtle, warm) */
+  .glow-text {
+    text-shadow: 0 0 24px rgba(201, 162, 39, 0.35), 0 0 2px rgba(201, 162, 39, 0.5);
+  }
+  .glow-box {
+    box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.3), 0 0 30px -8px rgba(201, 162, 39, 0.45);
+  }
+
+  /* Edge fade masks */
+  .mask-fade-b { mask-image: linear-gradient(180deg, #000 55%, transparent 100%); }
+  .mask-fade-t { mask-image: linear-gradient(180deg, transparent 0%, #000 45%); }
+  .mask-fade-x { mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+
+  /* Text gradient — warm white → gold (used sparingly) */
+  .text-gradient {
+    background: linear-gradient(100deg, var(--color-warm) 0%, var(--color-gold-light) 55%, var(--color-gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Canvas layering */
+  .canvas-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .canvas-wrap canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* R3F Html labels */
+  .bim-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .bim-label::before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: rgba(201, 162, 39, 0.65);
+    margin-right: 7px;
+    vertical-align: middle;
+  }
+
+  /* Mobile app-shell constraints */
+  @media (max-width: 640px) {
+    .bim-label { font-size: 8px; letter-spacing: 0.14em; }
+    .bim-label::before { width: 12px; margin-right: 5px; }
+  }
+}
+
+/* ============ Utilities (animations & helpers) ============ */
+@layer utilities {
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Animation utility classes */
+  .animate-scanline { animation: scanline 8s var(--ease-precise) infinite; }
+  .animate-floaty { animation: floaty 6s ease-in-out infinite; }
+  .animate-dash { stroke-dasharray: 8 10; animation: dashmove 22s linear infinite; }
+  .animate-pulse-glow { animation: pulseGlow 3.4s ease-in-out infinite; }
+  .animate-blink { animation: blink 2.2s steps(1, end) infinite; }
+  .animate-gridpan { animation: gridpan 26s linear infinite; }
+  .animate-spin-slow { animation: spinSlow 38s linear infinite; }
+  .animate-rise { animation: riseIn 0.8s var(--ease-precise) both; }
+  .animate-sweep { animation: sweep 10s linear infinite; }
+  .animate-north { animation: northwob 6s ease-in-out infinite; }
+
+  /* Reduced motion: strip non-essential animation */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ============ Keyframes (unlayered — no selector conflicts) ============ */
+@keyframes scanline {
+  0% { transform: translateY(-8%); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(108%); opacity: 0; }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes dashmove {
+  to { stroke-dashoffset: -1000; }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+@keyframes gridpan {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 28px 28px, 28px 28px, 140px 140px, 140px 140px; }
+}
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes northwob {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg); }
+}
