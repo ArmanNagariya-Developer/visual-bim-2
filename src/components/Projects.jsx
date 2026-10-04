@@ -13,8 +13,9 @@ export default function Projects() {
   const handleClose = useCallback(() => setSelected(null), []);
 
   const filtered = useMemo(() => {
+    // "All" shows every project; each category tab shows its single featured project.
     if (filter === 'All') return projects;
-    return projects.filter((p) => p.category === filter);
+    return projects.filter((p) => p.category === filter).slice(0, 1);
   }, [filter]);
 
   return (
@@ -40,16 +41,12 @@ export default function Projects() {
           <div className="mt-10 flex flex-wrap items-center gap-2.5 border-b border-line/10 pb-6">
             {projectCategories.map((cat) => {
               const on = filter === cat;
-              const count =
-                cat === 'All'
-                  ? projects.length
-                  : projects.filter((p) => p.category === cat).length;
               return (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setFilter(cat)}
-                  className={`group relative flex items-center gap-2.5 border px-4 py-2.5 transition-all duration-300 ${
+                  className={`group relative border px-4 py-2.5 transition-all duration-300 ${
                     on
                       ? 'border-sky bg-gold/10'
                       : 'border-line/12 hover:border-sky/40 hover:bg-gold/[0.04]'
@@ -61,13 +58,6 @@ export default function Projects() {
                     }`}
                   >
                     {cat.toUpperCase()}
-                  </span>
-                  <span
-                    className={`label text-[0.55rem] transition-colors duration-300 ${
-                      on ? 'text-gold/80' : 'text-concrete/60'
-                    }`}
-                  >
-                    {String(count).padStart(2, '0')}
                   </span>
                   {on && (
                     <motion.span

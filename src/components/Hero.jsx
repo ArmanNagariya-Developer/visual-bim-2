@@ -24,8 +24,6 @@ const EASE = [0.16, 1, 0.3, 1];
 
 const STAGES = [
   { name: 'POINT CLOUD', note: 'Reality capture' },
-  { name: 'SCANNED STRUCTURE', note: 'Registered data' },
-  { name: 'WIREFRAME', note: 'CAD geometry' },
   { name: 'BIM MODEL', note: 'Parametric' },
   { name: 'DIGITAL BUILDING', note: 'Coordinated' },
 ];
@@ -121,7 +119,7 @@ function ModelStateHUD({ stageRef }) {
   useEffect(() => {
     const id = setInterval(() => {
       const s = stageRef?.current ?? 0;
-      setIndex(Math.min(4, Math.floor(s + 0.45)));
+      setIndex(Math.min(2, Math.floor((s + 0.45) / 2)));
       setFrac(s / 4);
     }, 150);
     return () => clearInterval(id);
@@ -188,7 +186,7 @@ function ModelStateHUD({ stageRef }) {
       </div>
 
       <div className="mt-5 border-t border-line/10 pt-4">
-        <p className="label text-concrete/70">REVIT · LOD 300 · COORDINATED</p>
+        <p className="label text-concrete/70">REVIT · COORDINATED</p>
       </div>
     </div>
   );
@@ -262,8 +260,8 @@ export default function Hero() {
       />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-black-900" aria-hidden />
 
-      {/* ---- 4/5. Content ---- */}
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-center px-5 pb-28 pt-28 sm:px-8 lg:px-12 lg:pb-20">
+      {/* ---- 4/5. Content (click-through so the model can be dragged) ---- */}
+      <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-center px-5 pb-28 pt-28 sm:px-8 lg:px-12 lg:pb-20">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7 xl:col-span-6">
             <Reveal>
@@ -294,7 +292,7 @@ export default function Hero() {
             </Reveal>
 
             <Reveal delay={0.54}>
-              <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="pointer-events-auto mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <MagneticButton variant="primary" onClick={() => window.scrollToSection?.('services')}>
                   Explore Services
                 </MagneticButton>
@@ -307,14 +305,14 @@ export default function Hero() {
             <Reveal delay={0.66}>
               <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
                 {[
-                  { k: 'Scan to BIM', v: 'LOD 300' },
+                  { k: 'Scan to BIM', v: '' },
                   { k: 'Disciplines', v: 'ARCH · STR · MEP' },
-                  { k: 'Delivery', v: 'REVIT · CAD · IFC' },
+                  { k: 'Delivery', v: 'REVIT · CAD' },
                 ].map((item) => (
                   <div key={item.k} className="flex items-center gap-2.5">
                     <Icon name="check" size={13} className="text-gold" strokeWidth={2.4} />
                     <span className="label text-concrete-light/85">{item.k}</span>
-                    <span className="label text-gold">{item.v}</span>
+                    {item.v && <span className="label text-gold">{item.v}</span>}
                   </div>
                 ))}
               </div>

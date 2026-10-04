@@ -240,6 +240,10 @@
     display: block;
     width: 100% !important;
     height: 100% !important;
+    cursor: grab;
+  }
+  .canvas-wrap canvas:active {
+    cursor: grabbing;
   }
 
   /* R3F Html labels */

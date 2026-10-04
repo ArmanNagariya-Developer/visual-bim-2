@@ -3,8 +3,8 @@
  *
  * The building cycles slowly through its five visualisation states
  * (point cloud → scanned structure → wireframe → BIM model → digital
- * building) while the user can drag to inspect it. The stage value is
- * written to a ref every frame, so there are no React re-renders.
+ * building) while the user can drag to orbit it freely 360°. The stage
+ * value is written to a ref every frame, so there are no React re-renders.
  */
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -62,8 +62,6 @@ export default function BIMScene({ stageRef, reduced = false, mobile = false, cl
         autoRotateSpeed={0.32}
         minPolarAngle={0.5}
         maxPolarAngle={1.52}
-        minAzimuthAngle={-0.9}
-        maxAzimuthAngle={0.9}
         enableDamping
         dampingFactor={0.06}
         target={[0, 7.5, 0]}

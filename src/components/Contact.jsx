@@ -119,7 +119,7 @@ export default function Contact() {
     {
       icon: 'linkedin',
       label: 'LinkedIn',
-      value: 'linkedin.com/company/visual-bim',
+      value: 'linkedin.com/company/viual-bim',
       href: company.linkedin.value,
       placeholder: company.linkedin.placeholder,
     },
@@ -176,17 +176,6 @@ export default function Contact() {
                 </Reveal>
               ))}
             </div>
-
-            <Reveal delay={0.2}>
-              <div className="mt-6 flex items-start gap-3 border border-line/10 bg-blueprint-900/50 p-4">
-                <Icon name="shield" size={16} className="mt-0.5 flex-none text-gold/80" />
-                <p className="text-xs leading-relaxed text-concrete/80">
-                  Contact details shown above are clearly marked placeholders.
-                  They will be replaced with the official Visual BIM email and
-                  LinkedIn URL as soon as they are provided.
-                </p>
-              </div>
-            </Reveal>
           </div>
 
           {/* right — form */}

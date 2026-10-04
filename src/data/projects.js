@@ -1,9 +1,13 @@
 /**
  * Project portfolio.
  * Figures and locations are illustrative placeholders — no real client
- * statistics are claimed. Visuals are generated procedurally (see
- * ProjectVisual.jsx) from `scene` + `seed`, so no external imagery is required.
+ * statistics are claimed. Projects with a photo in `src/assets` use it via
+ * the `image` field; the rest fall back to procedurally generated visuals
+ * (see ProjectVisual.jsx) from `scene` + `seed`.
  */
+import project1 from '../assets/1.jpeg';
+import project2 from '../assets/2.jpeg';
+
 export const projectCategories = ['All', 'Residential', 'Commercial', 'Public Buildings'];
 
 export const projects = [
@@ -47,81 +51,31 @@ export const projects = [
     desc: 'Heritage civic structure captured with terrestrial laser scanning and rebuilt as an intelligent as-built model to support renovation and facilities management.',
   },
   {
-    id: 'p4',
-    title: 'Atlas Data Centre',
+    id: 'p10',
+    title: 'Vale Mill Structure Scan',
     category: 'Commercial',
-    type: 'Mission-Critical Facility',
+    type: 'Heritage Industrial / Scan to BIM',
     year: '2025',
-    location: 'East Industrial Zone',
-    services: ['PDF to BIM', '3D BIM Modeling', 'Revit Modeling'],
-    lod: 'LOD 400',
+    location: 'Mill Quarter',
+    services: ['Scan to BIM', 'As-Built Modeling'],
+    lod: 'LOD 300',
     scene: 'complex',
-    seed: 48,
-    desc: 'Mission-critical facility modelled from legacy PDF drawings, with detailed MEP routing and structural coordination for a phased fit-out programme.',
+    seed: 101,
+    image: project1,
+    desc: 'High-density laser scan of a two-storey mill structure with exposed roof framing, registered into a clean point cloud to support condition assessment and redevelopment design.',
   },
   {
-    id: 'p5',
-    title: 'Willow Creek Apartments',
+    id: 'p11',
+    title: 'Cedar Ridge Residential Complex',
     category: 'Residential',
-    type: 'Mid-Rise Residential',
-    year: '2024',
-    location: 'Willow Creek',
-    services: ['Scan to CAD', 'PDF to BIM', 'Revit Modeling'],
-    lod: 'LOD 250',
-    scene: 'tower',
-    seed: 52,
-    desc: 'A mid-rise apartment block documented from a combination of scanned as-built conditions and archival PDFs, producing layered CAD deliverables and a parametric model.',
-  },
-  {
-    id: 'p6',
-    title: 'Riverside Transit Hub',
-    category: 'Public Buildings',
-    type: 'Transport Infrastructure',
+    type: 'Low-Rise Residential',
     year: '2025',
-    location: 'Riverside Quay',
-    services: ['Scan to BIM', '3D BIM Modeling', 'As-Built Modeling'],
+    location: 'Cedar Ridge',
+    services: ['Revit Modeling', '3D BIM Modeling'],
     lod: 'LOD 350',
-    scene: 'public',
-    seed: 63,
-    desc: 'An operating transit interchange captured in point clouds and converted into a coordinated digital model, enabling phasing planning without interrupting passenger flow.',
-  },
-  {
-    id: 'p7',
-    title: 'Summit Corporate Plaza',
-    category: 'Commercial',
-    type: 'Mixed-Use Commercial',
-    year: '2026',
-    location: 'Financial Quarter',
-    services: ['CAD to BIM', 'Revit Modeling', '3D BIM Modeling'],
-    lod: 'LOD 300',
     scene: 'tower',
-    seed: 74,
-    desc: 'Mixed-use plaza combining retail podium and office tower into a single federated model with discipline-specific views and coordinated vertical risers.',
-  },
-  {
-    id: 'p8',
-    title: 'Heritage Town Hall',
-    category: 'Public Buildings',
-    type: 'Heritage Restoration',
-    year: '2024',
-    location: 'Old Town',
-    services: ['Scan to BIM', 'Scan to CAD', 'As-Built Modeling'],
-    lod: 'LOD 300',
-    scene: 'public',
-    seed: 85,
-    desc: 'Ornate 19th-century town hall laser-scanned at high density and modelled with as-built stonework documentation for a faithful restoration programme.',
-  },
-  {
-    id: 'p9',
-    title: 'The Terraces Housing',
-    category: 'Residential',
-    type: 'Townhouse Development',
-    year: '2025',
-    location: 'North Slope',
-    services: ['PDF to BIM', 'CAD to BIM', 'Revit Modeling'],
-    lod: 'LOD 250',
-    scene: 'complex',
-    seed: 93,
-    desc: 'A terraced housing development rebuilt from historical drawings into parametric models, with repeat typology families to accelerate documentation.',
+    seed: 112,
+    image: project2,
+    desc: 'Interconnected low-rise residential complex modelled parametrically in Revit, with pitched-roof wings, apartment layouts, and coordinated openings for documentation.',
   },
 ];

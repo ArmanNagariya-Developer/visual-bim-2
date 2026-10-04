@@ -104,7 +104,6 @@ export default function StaticBuilding({ className = '' }) {
       <g fill="rgba(201,162,39,0.8)" fontSize="9" fontFamily="monospace" letterSpacing="1.6">
         <text x="32" y="150">POINT CLOUD</text>
         <text x="300" y="120">BIM MODEL</text>
-        <text x="32" y="300">LOD 300</text>
         <text x="300" y="280">REVIT</text>
         <text x="32" y="440">MEP</text>
         <text x="298" y="440">AS-BUILT</text>
@@ -112,7 +111,6 @@ export default function StaticBuilding({ className = '' }) {
       <g stroke="rgba(201,162,39,0.45)" strokeWidth="1">
         <line x1="118" y1="146" x2="28" y2="146" />
         <line x1="292" y1="116" x2="296" y2="116" />
-        <line x1="118" y1="296" x2="28" y2="296" />
         <line x1="292" y1="276" x2="296" y2="276" />
         <line x1="118" y1="436" x2="28" y2="436" />
         <line x1="292" y1="436" x2="294" y2="436" />

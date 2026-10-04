@@ -74,11 +74,19 @@ export default function ProjectModal({ project, onClose }) {
 
             {/* hero visual */}
             <div className="relative h-56 w-full overflow-hidden bg-black-950 sm:h-80">
-              <ProjectVisual
-                scene={project.scene}
-                seed={project.seed}
-                className="h-full w-full"
-              />
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <ProjectVisual
+                  scene={project.scene}
+                  seed={project.seed}
+                  className="h-full w-full"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black-950 via-black-950/35 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                 <span className="label border border-sky/25 bg-black-950/70 px-3 py-1.5 text-[0.55rem] text-gold">

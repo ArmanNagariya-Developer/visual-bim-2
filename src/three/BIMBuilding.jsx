@@ -100,7 +100,6 @@ const LABELS = [
   { text: 'POINT CLOUD', pos: [-8.5, 2.6, 4.5], in: 0.0, out: 1.7 },
   { text: 'BIM', pos: [6.4, 15.2, -5.2], in: 1.5, out: 2.6 },
   { text: 'REVIT', pos: [-9.6, 9.4, -4.2], in: 2.1, out: 3.4 },
-  { text: 'LOD 300', pos: [8.8, 5.6, 5.0], in: 2.7, out: 4.6 },
   { text: 'ARCHITECTURAL', pos: [-9.2, 17.6, 2.8], in: 3.25, out: 5.2 },
   { text: 'STRUCTURAL', pos: [8.4, 11.4, 5.2], in: 3.45, out: 5.4 },
   { text: 'MEP', pos: [-6.6, 4.8, -6.4], in: 3.65, out: 5.6 },
@@ -175,6 +174,21 @@ export default function BIMBuilding({
   const ring = useRef();
 
   const labelRefs = useRef([]);
+  const dragging = useRef(false);
+
+  // Suppress the pointer-parallax sway while the user drags to orbit.
+  useEffect(() => {
+    const down = () => (dragging.current = true);
+    const up = () => (dragging.current = false);
+    window.addEventListener('pointerdown', down);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+    return () => {
+      window.removeEventListener('pointerdown', down);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -243,12 +257,14 @@ export default function BIMBuilding({
       });
     }
 
-    // ---- pointer parallax (subtle inspection) ------------------------
+    // ---- pointer parallax (subtle inspection; paused while dragging) --
     if (group.current && !reduced) {
-      const px = state.pointer.x;
-      const py = state.pointer.y;
-      const targetY = px * 0.32;
-      const targetX = -py * 0.16;
+      const targetY = dragging.current
+        ? group.current.rotation.y
+        : state.pointer.x * 0.32;
+      const targetX = dragging.current
+        ? group.current.rotation.x
+        : -state.pointer.y * 0.16;
       group.current.rotation.y += (targetY - group.current.rotation.y) * Math.min(1, delta * 1.6);
       group.current.rotation.x += (targetX - group.current.rotation.x) * Math.min(1, delta * 1.6);
       group.current.position.y = -1.1 + Math.sin(time * 0.5) * 0.22;

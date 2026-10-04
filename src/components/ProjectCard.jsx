@@ -52,11 +52,20 @@ export default function ProjectCard({ project, index, onOpen }) {
             whileHover={reduced ? undefined : { scale: 1.06 }}
             transition={{ duration: 0.7, ease: EASE }}
           >
-            <ProjectVisual
-              scene={project.scene}
-              seed={project.seed}
-              className="h-full w-full"
-            />
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <ProjectVisual
+                scene={project.scene}
+                seed={project.seed}
+                className="h-full w-full"
+              />
+            )}
           </motion.div>
 
           {/* dark overlay (deepens on hover) */}

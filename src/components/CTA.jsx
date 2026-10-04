@@ -89,7 +89,7 @@ export default function CTA() {
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-line/10 pt-8">
-            {['NDA Friendly', 'LOD 100–500', 'Revit · IFC · CAD', 'Global Delivery'].map((t) => (
+            {['LOD 100–500', 'Revit · CAD', 'Global Delivery'].map((t) => (
               <span key={t} className="label flex items-center gap-2 text-concrete/80">
                 <Icon name="check" size={12} className="text-gold" strokeWidth={2.4} />
                 {t}

@@ -1,12 +1,8 @@
 /**
  * Visual BIM — company information.
  *
- * ⚠️ CONTACT PLACEHOLDERS
- * The email address and LinkedIn URL below are PLACEHOLDERS.
- * They are intentionally marked and must be replaced with the
- * official Visual BIM details once provided. The UI shows a small
- * "placeholder" marker while these are not yet replaced so that no
- * placeholder is mistaken for real contact information.
+ * Contact details below are the official Visual BIM email and LinkedIn
+ * page; they are consumed by the navbar, contact section, and footer.
  */
 export const company = {
   name: 'Visual BIM',
@@ -16,12 +12,12 @@ export const company = {
     'Our mission is to deliver accurate, efficient, high-quality BIM solutions that improve project coordination, reduce costly errors, and accelerate construction workflows.',
   founded: 2026,
   email: {
-    value: 'hello@visualbim.com',
-    placeholder: true,
+    value: 'visualbim1@gmail.com',
+    placeholder: false,
   },
   linkedin: {
-    value: 'https://www.linkedin.com/company/visual-bim',
-    placeholder: true,
+    value: 'https://www.linkedin.com/company/viual-bim/people/?viewAsMember=true',
+    placeholder: false,
   },
   nav: [
     { id: 'home', label: 'Home' },
