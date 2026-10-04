@@ -12,7 +12,7 @@ export const company = {
     'Our mission is to deliver accurate, efficient, high-quality BIM solutions that improve project coordination, reduce costly errors, and accelerate construction workflows.',
   founded: 2026,
   email: {
-    value: 'armannagariya@gmail.com',
+    value: 'visualbim1@gmail.com',
     placeholder: false,
   },
   // International format without "+" or spaces — required by wa.me links.
