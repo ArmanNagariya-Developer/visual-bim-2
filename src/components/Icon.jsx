@@ -57,7 +57,11 @@ export default function Icon({ name, className = '', strokeWidth = 1.5, size = 2
       className={className}
       aria-hidden="true"
       {...rest}
-      dangerouslySetInnerHTML={isFill ? { __html: fills[name] } : { __html: paths[name] || '' }}
+      dangerouslySetInnerHTML={
+        isFill
+          ? { __html: `<path d="${fills[name]}"/>` }
+          : { __html: paths[name] || '' }
+      }
     />
   );
 }

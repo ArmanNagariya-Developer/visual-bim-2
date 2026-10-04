@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { company } from '../data/company';
 import { Reveal } from './Reveal';
@@ -28,6 +28,47 @@ const INITIAL = {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
+// FormSubmit AJAX endpoint — forwards the brief to the official inbox
+// without any backend (works on the static Vercel deployment).
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${company.email.value}`;
+
+/** Plain-text brief used for the mailto fallback. */
+function formatBrief(v) {
+  return [
+    'NEW PROJECT BRIEF — VISUAL BIM',
+    '',
+    `Name: ${v.name.trim()}`,
+    ...(v.company.trim() ? [`Company: ${v.company.trim()}`] : []),
+    `Email: ${v.email.trim()}`,
+    ...(v.phone.trim() ? [`Phone: ${v.phone.trim()}`] : []),
+    `Project Type: ${v.projectType}`,
+    '',
+    'Message:',
+    v.message.trim(),
+    '',
+    '— Sent via the Visual BIM website',
+  ].join('\n');
+}
+
+/* ---- 24h one-submission-per-visitor lock (client-side, localStorage) ---- */
+const RATE_KEY = 'visualbim.lastInquiryAt';
+const COOLDOWN_MS = 24 * 60 * 60 * 1000;
+
+function remainingCooldown() {
+  try {
+    const last = Number(localStorage.getItem(RATE_KEY)) || 0;
+    return Math.max(0, last + COOLDOWN_MS - Date.now());
+  } catch {
+    return 0; // storage unavailable (private mode) — don't block submissions
+  }
+}
+
+function formatRemaining(ms) {
+  const h = Math.floor(ms / 3600000);
+  const m = Math.ceil((ms % 3600000) / 60000);
+  return h > 0 ? `${h}h ${m}m` : `${m}m`;
+}
+
 function validate(values) {
   const errors = {};
   if (!values.name.trim()) errors.name = 'Please enter your name.';
@@ -54,7 +95,14 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | success
+  const [cooldown, setCooldown] = useState(() => remainingCooldown());
   const reduced = useReducedMotion();
+
+  // Keep the lock countdown fresh while the page is open.
+  useEffect(() => {
+    const id = setInterval(() => setCooldown(remainingCooldown()), 60000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleChange = useCallback(
     (e) => {
@@ -94,8 +142,54 @@ export default function Contact() {
         return;
       }
       setStatus('submitting');
-      // No backend in this demo — simulate a successful submission.
-      await new Promise((r) => setTimeout(r, 1100));
+
+      // Enforce the 24h limit before touching any channel.
+      const wait = remainingCooldown();
+      if (wait > 0) {
+        setCooldown(wait);
+        setStatus('idle');
+        return;
+      }
+
+      const brief = formatBrief(values);
+      const subject = `New Project Brief — ${values.name.trim()} (${values.projectType})`;
+
+      // Email — auto-send a formatted table copy to the official inbox.
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            _subject: subject,
+            _template: 'table',
+            _captcha: 'false',
+            _replyto: values.email.trim(),
+            _autoresponse:
+              'Thank you for contacting Visual BIM! Your project brief has been received and our team will reply within one business day. — Visual BIM | BIM Modeling & Digital Construction Solutions',
+            Name: values.name.trim(),
+            Company: values.company.trim() || '—',
+            Email: values.email.trim(),
+            Phone: values.phone.trim() || '—',
+            'Project Type': values.projectType,
+            Message: values.message.trim(),
+            'Sent from': 'Visual BIM website contact form',
+          }),
+        });
+        if (!res.ok) throw new Error(`FormSubmit responded ${res.status}`);
+      } catch {
+        // Fallback: pre-fill the visitor's mail app so the brief still arrives.
+        window.location.href = `mailto:${company.email.value}?subject=${encodeURIComponent(
+          subject,
+        )}&body=${encodeURIComponent(brief)}`;
+      }
+
+      // Start the 24h lock for this visitor.
+      try {
+        localStorage.setItem(RATE_KEY, String(Date.now()));
+      } catch {
+        /* ignore */
+      }
+      setCooldown(remainingCooldown());
       setStatus('success');
     },
     [values],
@@ -198,13 +292,44 @@ export default function Contact() {
                     Inquiry Sent
                   </h3>
                   <p className="mt-3 max-w-sm text-sm leading-relaxed text-concrete-light">
-                    Thank you — your project brief has been received. The Visual
-                    BIM team will respond within one business day.
+                    Thank you — your project brief has been sent to Visual BIM
+                    by email. The team will respond within one business day.
                   </p>
                   <div className="mt-8">
                     <MagneticButton variant="outline" onClick={reset}>
                       Send Another Inquiry
                     </MagneticButton>
+                  </div>
+                </motion.div>
+              ) : cooldown > 0 ? (
+                <motion.div
+                  key="cooldown"
+                  initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="panel relative flex min-h-[28rem] flex-col items-center justify-center p-10 text-center"
+                >
+                  <Corners />
+                  <span className="flex h-16 w-16 items-center justify-center border border-sky/40 text-gold">
+                    <Icon name="gauge" size={30} strokeWidth={2} />
+                  </span>
+                  <h3 className="mt-7 text-2xl font-semibold tracking-tight">
+                    Inquiry Already Sent
+                  </h3>
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-concrete-light">
+                    You have already submitted a project brief within the last 24
+                    hours. You can send another one in{' '}
+                    <span className="text-gold">{formatRemaining(cooldown)}</span>. For
+                    anything urgent, email us directly:
+                  </p>
+                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                    <a
+                      href={`mailto:${company.email.value}`}
+                      className="label border border-sky/25 px-5 py-3 text-[0.65rem] text-gold transition-colors duration-300 hover:border-sky hover:bg-gold/10"
+                    >
+                      Email Us
+                    </a>
                   </div>
                 </motion.div>
               ) : (

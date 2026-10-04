@@ -12,11 +12,13 @@ export const company = {
     'Our mission is to deliver accurate, efficient, high-quality BIM solutions that improve project coordination, reduce costly errors, and accelerate construction workflows.',
   founded: 2026,
   email: {
-    value: 'visualbim1@gmail.com',
+    value: 'armannagariya@gmail.com',
     placeholder: false,
   },
+  // International format without "+" or spaces — required by wa.me links.
+  whatsapp: '919510565141',
   linkedin: {
-    value: 'https://www.linkedin.com/company/viual-bim/people/?viewAsMember=true',
+    value: 'https://www.linkedin.com/company/viual-bim/',
     placeholder: false,
   },
   nav: [
